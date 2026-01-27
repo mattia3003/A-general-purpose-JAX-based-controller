@@ -11,13 +11,16 @@ class Bathtub_plant(Plant):
         self.water_height = self.initial_state
         self.target_height = self.target_state
         self.area = float(environ.get("CSA_A"))
-        self.drain = self.area / float(environ.get("CSA_C_DIVIDER"))
+        self.drain = float(environ.get("CSA_C"))
+        #self.drain = self.area / float(environ.get("CSA_C_DIVIDER"))
 
     def generate_plant_output(self, control_signal: float, disturbance: float):
+
         flow_rate = self.calculate_flow_rate()
         volume_change = control_signal + disturbance - flow_rate
-        water_height_change = volume_change / self.area
-        self.water_height = self.water_height + water_height_change
+        self.water_height = jnp.maximum(0.0, self.water_height + (volume_change) / self.area)
+        print("Water height:", self.water_height)
+
         return self.water_height
 
     def reset_state(self):
@@ -25,7 +28,7 @@ class Bathtub_plant(Plant):
     
     def calculate_velocity(self):
         return jnp.sqrt(2 * 9.8 * self.water_height)
-    
+
     def calculate_flow_rate(self):
         return self.drain * self.calculate_velocity()
     

@@ -5,14 +5,17 @@ class Plant(ABC):
         self.initial_state = 0.0
         self.target_state = 0.0
 
-    @abstractmethod
+    # @abstractmethod
     def generate_plant_output(self):
-        raise NotImplementedError("generate_plant_outout()")
+        # raise NotImplementedError("generate_plant_outout()")
+        pass
 
-    @abstractmethod
+    # @abstractmethod
     def reset_state(self):
-        raise NotImplementedError("reset_state()")
-    
-    @abstractmethod
+        # raise NotImplementedError("reset_state()")
+        pass
+
+    # @abstractmethod
     def get_initial_and_target_state(self):
-        raise NotImplementedError("get_initial_and_goal_state()")
+        # raise NotImplementedError("get_initial_and_goal_state()")
+        pass
