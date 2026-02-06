@@ -3,6 +3,7 @@ from os import environ
 from dotenv import load_dotenv
 import jax.numpy as jnp
 
+# function for the population plant, which inherits from the base plant class and implements generate_plant_output and get_initial_and_target_state
 class Population_plant(Plant):
     def __init__(self):
         load_dotenv()
@@ -14,6 +15,7 @@ class Population_plant(Plant):
         self.mortality_rate = float(environ.get("MORTALITY_RATE"))
         self.carrying_capacity = float(environ.get("CARRYING_CAPACITY"))
 
+    # function for generating the plant output based on the control signal, disturbance and plant dynamics
     def generate_plant_output(self, control_signal: float, disturbance: float):
         current_density = self.population / self.carrying_capacity
         growth_factor = 1 - current_density
@@ -22,9 +24,7 @@ class Population_plant(Plant):
         print("Population:", self.population)
         return self.population
 
-    def reset_state(self):
-        self.population = self.initial_state
-    
+    # function for getting the initial and target state of the plant from the .env file
     def get_initial_and_target_state(self):
         self.initial_state = float(environ.get("INITIAL_POPULATION"))
         self.target_state = float(environ.get("TARGET_POPULATION"))
